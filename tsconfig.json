@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "target": "es2021",
+    "lib": [
+      "es2021",
+      "DOM"
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "declaration": true,
+    "outDir": "./dist",
+    "paths": {
+      "@pravah/agent": [
+        "./src/index"
+      ],
+      "@pravah/agent/types": [
+        "./src/types/index"
+      ],
+      "@pravah/agent/custom-actions": [
+        "./src/custom-actions/index"
+      ],
+      "@pravah/agent/actions": [
+        "./src/agent/actions/index"
+      ],
+      "@pravah/agent/utils": [
+        "./src/utils/index"
+      ],
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "debug"
+  ]
+}
