@@ -16,6 +16,7 @@
 
   <p>
     <a href="#what-is-pravah">Overview</a> ·
+    <a href="#running-locally">Running Locally</a> ·
     <a href="#technical-architecture">Architecture</a> ·
     <a href="#core-apis">APIs</a> ·
     <a href="#project-structure">Project Structure</a>
@@ -29,6 +30,112 @@
 **Pravah** is a production-grade autonomous browser agent framework built for human-AI collaboration. It gives LLMs eyes, hands, and memory inside real browsers — enabling agents to navigate, interact, extract, and reason about any web page using only natural language.
 
 Unlike traditional browser automation built on brittle selectors, Pravah uses a **live accessibility tree** as its world model, speaks **Chrome DevTools Protocol natively**, and wraps a full **agentic loop** around any LLM you choose — OpenAI, Anthropic, Gemini, DeepSeek, or any OpenRouter model.
+
+---
+
+## Running Locally
+
+### Prerequisites
+
+| Requirement | Version |
+|---|---|
+| Node.js | 18 or higher |
+| Yarn | 1.x (classic) |
+| Git | any recent version |
+| Chrome / Chromium | installed locally (Playwright will manage this) |
+
+At least one LLM API key is required (OpenRouter, OpenAI, Anthropic, Gemini, or DeepSeek).
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Nakshatra480/Pravah-AI.git
+cd Pravah-AI
+```
+
+### 2. Install dependencies
+
+```bash
+yarn install
+```
+
+### 3. Set up environment variables
+
+Copy the example env file and fill in your keys:
+
+```bash
+cp .env.example .env
+```
+
+Then open `.env` and add at minimum one of the following:
+
+```
+# Recommended — free tier available
+OPENROUTER_API_KEY_1=sk-or-v1-...
+
+# Or use a direct provider key
+OPENAI_API_KEY=sk-...
+ANTHROPIC_API_KEY=sk-ant-...
+GEMINI_API_KEY=AIza...
+DEEPSEEK_API_KEY=sk-...
+```
+
+### 4. Install Playwright browsers
+
+```bash
+npx playwright install chromium
+```
+
+### 5. Build the project
+
+```bash
+yarn build
+```
+
+This compiles TypeScript to `dist/` and sets correct permissions on the CLI.
+
+### 6. Run via CLI
+
+```bash
+yarn cli -c "Go to news.ycombinator.com and return the top 5 post titles"
+```
+
+With debug mode (saves step-by-step artifacts to `debug/`):
+
+```bash
+yarn cli -c "your task here" --debug
+```
+
+### 7. Run a script directly
+
+```bash
+# Uses ts-node — no build step needed
+yarn example scripts/test.ts
+yarn example scripts/test-extract.ts
+yarn example examples/simple/add-to-amazon-cart.ts
+```
+
+### 8. Run linting and tests
+
+```bash
+yarn lint       # ESLint across all src/**/*.ts
+yarn format     # Prettier auto-fix
+yarn test       # Jest unit tests
+```
+
+### Environment Variable Reference
+
+| Variable | Required | Description |
+|---|---|---|
+| `OPENROUTER_API_KEY_1` | One LLM key required | Primary OpenRouter key (free tier available) |
+| `OPENROUTER_API_KEY_2` | No | Secondary key for load balancing |
+| `OPENROUTER_MODEL` | No | Override default model |
+| `OPENROUTER_FALLBACK_MODEL` | No | Fallback when primary is rate-limited |
+| `OPENAI_API_KEY` | No | Direct OpenAI access |
+| `ANTHROPIC_API_KEY` | No | Direct Anthropic access |
+| `GEMINI_API_KEY` | No | Direct Google Gemini access |
+| `DEEPSEEK_API_KEY` | No | Direct DeepSeek access |
+| `PRAVAH_CLOUD_API_KEY` | No | Remote cloud browser sessions |
 
 ---
 
