@@ -106,9 +106,21 @@ export class PravahAgent<T extends BrowserProviders = "Local"> {
   constructor(params: PravahConfig<T> = {}) {
     if (!params.llm) {
       // Auto-detect OpenRouter key pool from numbered env vars (OPENROUTER_API_KEY_1, _2, ...)
-      const orKeys = ([1, 2, 3, 4, 5] as const)
-        .map((i) => process.env[`OPENROUTER_API_KEY_${i}`])
-        .filter((k): k is string => typeof k === "string" && k.length > 0);
+      // or fallback / generic keys
+      const rawKeys = [
+        ...([1, 2, 3, 4, 5] as const).map(
+          (i) => process.env[`OPENROUTER_API_KEY_${i}`]
+        ),
+        process.env.OPENROUTER_FALLBACK_API_KEY,
+        process.env.OPENROUTER_API_KEY,
+      ];
+      const orKeys = Array.from(
+        new Set(
+          rawKeys.filter(
+            (k): k is string => typeof k === "string" && k.trim().length > 0
+          )
+        )
+      );
 
       if (orKeys.length > 0) {
         this.llm = createLLMClient({

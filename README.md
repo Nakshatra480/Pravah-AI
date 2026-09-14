@@ -128,7 +128,8 @@ yarn test       # Jest unit tests
 | Variable | Required | Description |
 |---|---|---|
 | `OPENROUTER_API_KEY_1` | One LLM key required | Primary OpenRouter key (free tier available) |
-| `OPENROUTER_API_KEY_2` | No | Secondary key for load balancing |
+| `OPENROUTER_API_KEY_2..5` | No | Additional keys for pool load-balancing |
+| `OPENROUTER_FALLBACK_API_KEY` | No | Fallback OpenRouter API key |
 | `OPENROUTER_MODEL` | No | Override default model |
 | `OPENROUTER_FALLBACK_MODEL` | No | Fallback when primary is rate-limited |
 | `OPENAI_API_KEY` | No | Direct OpenAI access |
