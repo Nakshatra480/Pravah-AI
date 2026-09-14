@@ -29,21 +29,21 @@ import { createOpenAIClient, OpenAIClient } from "./openai";
 // ---------------------------------------------------------------------------
 
 const OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1";
-const DEFAULT_PRIMARY_MODEL = "nex-agi/nex-n2.5-pro:free";
-const DEFAULT_FALLBACK_MODEL = "dots-studio/dots-3-note-preview:free";
-const DEFAULT_COOLDOWN_MS = 60_000;
-const DEFAULT_MAX_WAIT_MS = 90_000;
+const DEFAULT_PRIMARY_MODEL = "openrouter/free";
+const DEFAULT_FALLBACK_MODEL = "google/gemma-3-27b-it:free";
+const DEFAULT_COOLDOWN_MS = 30_000;
+const DEFAULT_MAX_WAIT_MS = 30_000;
 /** Full passes over the key pool when every failure was a dropped connection. */
 const TRANSIENT_RETRY_PASSES = 2;
 /** Pause between transient retry passes. */
-const TRANSIENT_RETRY_DELAY_MS = 1_500;
+const TRANSIENT_RETRY_DELAY_MS = 1_000;
 /** Per-request ceiling. Free-tier endpoints occasionally stall for many
- *  minutes; without this the SDK would wait 10 minutes and freeze the agent. */
-const DEFAULT_REQUEST_TIMEOUT_MS = 45_000;
+ *  minutes; without this the SDK would wait 10 minutes and freeze the agent.
+ *  Lowered to 15s to fast-fail on stalled free-tier endpoints. */
+const DEFAULT_REQUEST_TIMEOUT_MS = 15_000;
 /** Hard ceiling for one logical LLM call, across every key, retry pass and
- *  model fallback. Without it, a stalled endpoint could burn
- *  timeout x keys x passes x models (many minutes) and freeze the agent. */
-const DEFAULT_OVERALL_TIMEOUT_MS = 150_000;
+ *  model fallback. Kept tight (60s) so the agent recovers quickly. */
+const DEFAULT_OVERALL_TIMEOUT_MS = 60_000;
 
 // ---------------------------------------------------------------------------
 // Types

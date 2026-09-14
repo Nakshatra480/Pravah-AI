@@ -127,10 +127,10 @@ export class PravahAgent<T extends BrowserProviders = "Local"> {
           provider: "openrouter",
           apiKeys: orKeys,
           model:
-            process.env.OPENROUTER_MODEL ?? "nex-agi/nex-n2.5-pro:free",
+            process.env.OPENROUTER_MODEL ?? "openrouter/free",
           fallbackModel:
             process.env.OPENROUTER_FALLBACK_MODEL ??
-            "dots-studio/dots-3-note-preview:free",
+            "google/gemma-3-27b-it:free",
           temperature: 0,
         });
       } else if (process.env.OPENAI_API_KEY) {
